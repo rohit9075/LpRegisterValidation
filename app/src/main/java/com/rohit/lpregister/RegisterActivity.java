@@ -6,10 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,
+        RadioGroup.OnCheckedChangeListener{
 
     private EditText mEditTextFirstName,mEditTextLastName,mEditTextEmail,mEditTextMobile,mEditTextDob,mEditTextPassword,
     mEditTextConfirmPassword;
@@ -19,6 +22,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextView mTextViewAlreadyMember;
 
     private ImageView mImageViewCandidateImage;
+
+    // RadioGroup object Declaration.
+    private RadioGroup mRadioGroupGender;
+
+    // RadioButton object Declaration.
+    private RadioButton mRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +49,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void clickListner() {
         mButtonRegister.setOnClickListener(this);
+
         mTextViewAlreadyMember.setOnClickListener(this);
+
         mImageViewCandidateImage.setOnClickListener(this);
+
+        mRadioGroupGender.setOnCheckedChangeListener(this);
     }
 
     /**
@@ -62,6 +75,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mTextViewAlreadyMember = findViewById(R.id.textView_already_member);
 
         mImageViewCandidateImage = findViewById(R.id.imageView);
+
+        mRadioGroupGender = findViewById(R.id.radioGroup);
     }
 
     /**
@@ -107,7 +122,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         sb.append("  ");
         sb.append(mEditTextConfirmPassword.getText().toString().trim());
 
+        if (mRadioGroupGender != null) {
+            String  mRegisterGender = mRadioButton.getText().toString().trim();
+            sb.append("  ");
+            sb.append(mRegisterGender);
+        }
+
+
         Toast.makeText(this, sb, Toast.LENGTH_SHORT).show();
 
+    }
+
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+        // getting the checked button id.
+        mRadioButton = (RadioButton) group.findViewById(checkedId);
     }
 }
