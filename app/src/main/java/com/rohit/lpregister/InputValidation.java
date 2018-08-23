@@ -3,15 +3,16 @@ package com.rohit.lpregister;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.RatingBar;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
+
+import java.util.Objects;
 
 /**
  * InputValidation java class to validate the user input.
@@ -28,7 +29,7 @@ public class InputValidation {
      *
      * @param context Activity context
      */
-    public InputValidation(Context context) {
+    InputValidation(Context context) {
         this.context = context;
     }
 
@@ -39,17 +40,17 @@ public class InputValidation {
      * @param message  String message passed form the calling class or method
      * @return Method is returning the boolean value
      */
-    public boolean isInputEditTextFilled(EditText editText, String message) {
+    boolean isInputEditTextFilled(EditText editText, String message) {
         String value = editText.getText().toString().trim();
         if (value.isEmpty()) {
             Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
             customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
             editText.setError(message,customErrorDrawable);
             hideKeyboardFrom(editText);
-            return false;
+            return true;
         }else {
             editText.setError(null);
-            return true;
+            return false;
         }
     }
 
@@ -65,40 +66,25 @@ public class InputValidation {
         imm.hideSoftInputFromWindow(view.getWindowToken(), WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    /**
-     * Method to check whether the radio button is checked or not
-     *
-     * @param gender  viewGroup
-     * @param context Activity context
-     * @return Method is returning the boolean value
-     */
-    public boolean isRadioButtonChecked(RadioGroup gender, Context context) {
-        if (gender.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(context, "Please select Gender", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Validating the email id
      *
      * @param editText view
-     * @param message  error message provided by the calling method or class
      * @return This method is returning the boolean value
      */
-    public boolean isInputEditTextEmail(EditText editText, String message) {
+    boolean isInputEditTextEmail(EditText editText) {
         String value = editText.getText().toString().trim();
         if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
 
             Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
             customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
-            editText.setError(message,customErrorDrawable);
+            editText.setError("Email Required",customErrorDrawable);
             hideKeyboardFrom(editText);
-            return false;
+            return true;
         } else {
             editText.setError(null);
-            return true;
+            return false;
         }
 
     }
@@ -108,20 +94,20 @@ public class InputValidation {
 
     /**
      * @param textInputEditText view
-     * @param message           this message will be provided by the calling method or class
+     * @param message this message will be provided by the calling method or class
      * @return method is returning boolean value
      */
-    public boolean isInputTextInputEditTextFilled(TextInputEditText textInputEditText, String message) {
-        String value = textInputEditText.getText().toString().trim();
+    boolean isInputTextInputEditTextFilled(TextInputEditText textInputEditText, String message) {
+        String value = Objects.requireNonNull(textInputEditText.getText()).toString().trim();
         if (value.isEmpty()) {
             Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
             customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
             textInputEditText.setError(message,customErrorDrawable);
             hideKeyboardFrom(textInputEditText);
-            return false;
+            return true;
         }else {
             textInputEditText.setError(null);
-            return true;
+            return false;
         }
 
 
@@ -131,24 +117,23 @@ public class InputValidation {
      * This method validates the entered password matched or not.
      * @param firstPassword first view
      * @param secondPassword second view
-     * @param message error message
      * @return boolean
      */
 
-    public boolean isTextInputEditTextPasswordMatches(TextInputEditText firstPassword, TextInputEditText secondPassword, String message) {
-        String value1 = firstPassword.getText().toString().trim();
-        String value2 = secondPassword.getText().toString().trim();
+    boolean isTextInputEditTextPasswordMatches(TextInputEditText firstPassword, TextInputEditText secondPassword) {
+        String value1 = Objects.requireNonNull(firstPassword.getText()).toString().trim();
+        String value2 = Objects.requireNonNull(secondPassword.getText()).toString().trim();
         if (!value1.contentEquals(value2)) {
 
             Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
             customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
-            secondPassword.setError(message,customErrorDrawable);
+            secondPassword.setError("Password Mismatch",customErrorDrawable);
             hideKeyboardFrom(secondPassword);
-            return false;
+            return true;
         }
         else {
             secondPassword.setError(null);
-            return true;
+            return false;
         }
 
 
@@ -162,7 +147,7 @@ public class InputValidation {
      */
 
     public boolean isPasswordLengthTextInputEditText(TextInputEditText passwordLength, String message) {
-        String password = passwordLength.getText().toString().trim();
+        String password = Objects.requireNonNull(passwordLength.getText()).toString().trim();
 //        String pattern = "^(?=.*[0-9])(?=.*[!@#$%^&*+=?-]).{8,15}$";
         if(password.length()<=6) {
 
@@ -170,11 +155,11 @@ public class InputValidation {
             customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
             passwordLength.setError(message,customErrorDrawable);
             hideKeyboardFrom(passwordLength);
-            return false;
+            return true;
         }
         else {
             passwordLength.setError(null);
-            return true;
+            return false;
         }
     }
 
@@ -182,18 +167,17 @@ public class InputValidation {
     /**
      * This method validates the radiobutton selected or not
      * @param radioGroup viewGroup
-     * @param message error message
      * @return boolean
      */
 
-    public boolean isRadioButtonSelected(RadioGroup radioGroup, String message) {
+    boolean isRadioButtonSelected(RadioGroup radioGroup, RelativeLayout relativeLayout) {
         if ( radioGroup.getCheckedRadioButtonId() == -1) {
 
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
+            Snackbar.make(relativeLayout, "Please Select Gender", Snackbar.LENGTH_LONG).show();
 
+            return true;
+        }
+        return false;
+    }
 
 }

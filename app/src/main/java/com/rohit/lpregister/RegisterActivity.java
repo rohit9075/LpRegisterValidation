@@ -9,8 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,
         RadioGroup.OnCheckedChangeListener{
@@ -37,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     String  mRegisterGender;
+
+    private RelativeLayout mRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         mRadioGroupGender = findViewById(R.id.radioGroupP_gender);
 
+        mRelativeLayout = findViewById(R.id.relative_layout);
+
     }
 
     public void initObject(){
@@ -106,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.button_register:
 
                 inputFieldValidation();
-//               getData();   //getData() method call
+
                 break;
 
             case R.id.textView_already_member:
@@ -135,9 +142,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         sb.append("  ");
         sb.append(mEditTextDob.getText().toString().trim());
         sb.append("  ");
-        sb.append(mTextInputEditTextPassword.getText().toString().trim());
+        sb.append(Objects.requireNonNull(mTextInputEditTextPassword.getText()).toString().trim());
         sb.append("  ");
-        sb.append(mTextInputEditTextConfirmPassword.getText().toString().trim());
+        sb.append(Objects.requireNonNull(mTextInputEditTextConfirmPassword.getText()).toString().trim());
 
         if (mRadioGroupGender != null) {
 
@@ -162,47 +169,54 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void inputFieldValidation() {
 
         // Checking the First Name Field
-        if (!mInputValidation.isInputEditTextFilled(mEditTextFirstName, "First Name Required")) {
+        if (mInputValidation.isInputEditTextFilled(mEditTextFirstName, "First Name Required")) {
             return;
         }
         // Checking the Last Name Field
-        if (!mInputValidation.isInputEditTextFilled(mEditTextLastName, "Last Name Required")) {
+        if (mInputValidation.isInputEditTextFilled(mEditTextLastName, "Last Name Required")) {
             return;
         }
 
         // Checking the Email Field
-        if (!mInputValidation.isInputEditTextEmail(mEditTextEmail, "Email Required")) {
+        if (mInputValidation.isInputEditTextEmail(mEditTextEmail)) {
             return;
         }
 
         // Checking the Mobile Number Field
-        if (!mInputValidation.isInputEditTextFilled(mEditTextMobile, "Mobile Number Required")) {
+        if (mInputValidation.isInputEditTextFilled(mEditTextMobile, "Mobile Number Required")) {
             return;
         }
 
         // Checking the DOB Field
-        if (!mInputValidation.isInputEditTextFilled(mEditTextDob, "DOB Required")) {
+        if (mInputValidation.isInputEditTextFilled(mEditTextDob, "DOB Required")) {
             return;
         }
 
+        // Checking the RadioButton
+        if (mInputValidation.isRadioButtonSelected(mRadioGroupGender, mRelativeLayout)) {
+            return;
+        }
+
+
+
         // Checking the Password Field
-        if (!mInputValidation.isInputTextInputEditTextFilled(mTextInputEditTextPassword, "Password Required")) {
+        if (mInputValidation.isInputTextInputEditTextFilled(mTextInputEditTextPassword, "Password Required")) {
             return;
         }
 
         // Checking the Confirm Password field Field
-        if (!mInputValidation.isInputTextInputEditTextFilled(mTextInputEditTextConfirmPassword, "Confirm Password  Required")) {
+        if (mInputValidation.isInputTextInputEditTextFilled(mTextInputEditTextConfirmPassword, "Confirm Password  Required")) {
             return;
         }
 
 
         // Checking the matching both password Field
-        if (!mInputValidation. isTextInputEditTextPasswordMatches(mTextInputEditTextPassword, mTextInputEditTextConfirmPassword ,"Password mismatch")) {
+        if (mInputValidation. isTextInputEditTextPasswordMatches(mTextInputEditTextPassword, mTextInputEditTextConfirmPassword)) {
             return;
         }
 
 
-
+               getData();   //getData() method call
 
 
     }
