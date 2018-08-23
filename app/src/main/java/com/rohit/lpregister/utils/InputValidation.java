@@ -3,6 +3,7 @@ package com.rohit.lpregister.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.view.View;
@@ -45,8 +46,7 @@ public class InputValidation {
   public boolean isInputEditTextFilled(EditText editText, String message) {
         String value = editText.getText().toString().trim();
         if (value.isEmpty()) {
-            Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
-            customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
+            Drawable customErrorDrawable = getErrorIcon();
             editText.setError(message,customErrorDrawable);
             hideKeyboardFrom(editText);
             return true;
@@ -79,8 +79,7 @@ public class InputValidation {
         String value = editText.getText().toString().trim();
         if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
 
-            Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
-            customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
+            Drawable customErrorDrawable = getErrorIcon();
             editText.setError("Email Required",customErrorDrawable);
             hideKeyboardFrom(editText);
             return true;
@@ -102,8 +101,7 @@ public class InputValidation {
   public   boolean isInputTextInputEditTextFilled(TextInputEditText textInputEditText, String message) {
         String value = Objects.requireNonNull(textInputEditText.getText()).toString().trim();
         if (value.isEmpty()) {
-            Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
-            customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
+            Drawable customErrorDrawable = getErrorIcon();
             textInputEditText.setError(message,customErrorDrawable);
             hideKeyboardFrom(textInputEditText);
             return true;
@@ -122,13 +120,12 @@ public class InputValidation {
      * @return boolean
      */
 
-  public   boolean isTextInputEditTextPasswordMatches(TextInputEditText firstPassword, TextInputEditText secondPassword) {
+  public  boolean isTextInputEditTextPasswordMatches(TextInputEditText firstPassword, TextInputEditText secondPassword) {
         String value1 = Objects.requireNonNull(firstPassword.getText()).toString().trim();
         String value2 = Objects.requireNonNull(secondPassword.getText()).toString().trim();
         if (!value1.contentEquals(value2)) {
 
-            Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
-            customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
+            Drawable customErrorDrawable = getErrorIcon();
             secondPassword.setError("Password Mismatch",customErrorDrawable);
             hideKeyboardFrom(secondPassword);
             return true;
@@ -139,6 +136,13 @@ public class InputValidation {
         }
 
 
+    }
+
+    @NonNull
+    private Drawable getErrorIcon() {
+        Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
+        customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
+        return customErrorDrawable;
     }
 
     /**
@@ -153,8 +157,7 @@ public class InputValidation {
 //        String pattern = "^(?=.*[0-9])(?=.*[!@#$%^&*+=?-]).{8,15}$";
         if(password.length()<=6) {
 
-            Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
-            customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
+            Drawable customErrorDrawable = getErrorIcon();
             passwordLength.setError(message,customErrorDrawable);
             hideKeyboardFrom(passwordLength);
             return true;
