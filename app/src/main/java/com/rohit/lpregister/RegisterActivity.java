@@ -1,5 +1,6 @@
 package com.rohit.lpregister;
 
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,13 +15,16 @@ import android.widget.Toast;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,
         RadioGroup.OnCheckedChangeListener{
 
-    private EditText mEditTextFirstName,mEditTextLastName,mEditTextEmail,mEditTextMobile,mEditTextDob,mEditTextPassword,
-    mEditTextConfirmPassword;
+    private EditText mEditTextFirstName,mEditTextLastName,mEditTextEmail,mEditTextMobile,mEditTextDob;
+    ;
+
+    private TextInputEditText mTextInputEditTextPassword, mTextInputEditTextConfirmPassword;
 
     private Button mButtonRegister;
 
     private TextView mTextViewAlreadyMember;
 
+    // ImageView Instance Variable
     private ImageView mImageViewCandidateImage;
 
     // RadioGroup object Declaration.
@@ -29,17 +33,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     // RadioButton object Declaration.
     private RadioButton mRadioButton;
 
+    private InputValidation mInputValidation;
+
+
+    String  mRegisterGender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // initView() method call
-         initView();
 
+         initView(); // initView() method call
 
-         // clickListener(); method call
-        clickListener();
+        clickListener(); // clickListener(); method call
+
+        initObject(); // initObject method call
 
     }
 
@@ -66,8 +75,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mEditTextLastName = findViewById(R.id.editText_last_name);
         mEditTextEmail = findViewById(R.id.editText_email);
         mEditTextMobile = findViewById(R.id.editText_mobile_number);
-        mEditTextPassword = findViewById(R.id.editText_password);
-        mEditTextConfirmPassword = findViewById(R.id.editText_confirm_password);
+        mTextInputEditTextPassword = findViewById(R.id.editText_password);
+        mTextInputEditTextConfirmPassword = findViewById(R.id.editText_confirm_password);
         mEditTextDob = findViewById(R.id.editText_dob);
 
         mButtonRegister = findViewById(R.id.button_register);
@@ -76,7 +85,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         mImageViewCandidateImage = findViewById(R.id.imageView);
 
-        mRadioGroupGender = findViewById(R.id.radioGroup);
+        mRadioGroupGender = findViewById(R.id.radioGroupP_gender);
+
+    }
+
+    public void initObject(){
+
+        mInputValidation = new InputValidation(this);
     }
 
     /**
@@ -89,7 +104,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()){
 
             case R.id.button_register:
-                getData();   //getData() method call
+
+                inputFieldValidation();
+//               getData();   //getData() method call
                 break;
 
             case R.id.textView_already_member:
@@ -118,12 +135,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         sb.append("  ");
         sb.append(mEditTextDob.getText().toString().trim());
         sb.append("  ");
-        sb.append(mEditTextPassword.getText().toString().trim());
+        sb.append(mTextInputEditTextPassword.getText().toString().trim());
         sb.append("  ");
-        sb.append(mEditTextConfirmPassword.getText().toString().trim());
+        sb.append(mTextInputEditTextConfirmPassword.getText().toString().trim());
 
         if (mRadioGroupGender != null) {
-            String  mRegisterGender = mRadioButton.getText().toString().trim();
+
+            mRegisterGender = mRadioButton.getText().toString().trim();
             sb.append("  ");
             sb.append(mRegisterGender);
         }
@@ -139,5 +157,53 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         // getting the checked button id.
         mRadioButton = (RadioButton) group.findViewById(checkedId);
+    }
+
+    public void inputFieldValidation() {
+
+        // Checking the First Name Field
+        if (!mInputValidation.isInputEditTextFilled(mEditTextFirstName, "First Name Required")) {
+            return;
+        }
+        // Checking the Last Name Field
+        if (!mInputValidation.isInputEditTextFilled(mEditTextLastName, "Last Name Required")) {
+            return;
+        }
+
+        // Checking the Email Field
+        if (!mInputValidation.isInputEditTextEmail(mEditTextEmail, "Email Required")) {
+            return;
+        }
+
+        // Checking the Mobile Number Field
+        if (!mInputValidation.isInputEditTextFilled(mEditTextMobile, "Mobile Number Required")) {
+            return;
+        }
+
+        // Checking the DOB Field
+        if (!mInputValidation.isInputEditTextFilled(mEditTextDob, "DOB Required")) {
+            return;
+        }
+
+        // Checking the Password Field
+        if (!mInputValidation.isInputTextInputEditTextFilled(mTextInputEditTextPassword, "Password Required")) {
+            return;
+        }
+
+        // Checking the Confirm Password field Field
+        if (!mInputValidation.isInputTextInputEditTextFilled(mTextInputEditTextConfirmPassword, "Confirm Password  Required")) {
+            return;
+        }
+
+
+        // Checking the matching both password Field
+        if (!mInputValidation. isTextInputEditTextPasswordMatches(mTextInputEditTextPassword, mTextInputEditTextConfirmPassword ,"Password mismatch")) {
+            return;
+        }
+
+
+
+
+
     }
 }
