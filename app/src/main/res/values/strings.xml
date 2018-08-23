@@ -11,4 +11,6 @@
     <string name="text_register">register</string>
     <string name="text_already_a_member">Already a member</string>
     <string name="text_mobile_number">Mobile Number</string>
+    <string name="text_male">Male</string>
+    <string name="text_female">Female</string>
 </resources>

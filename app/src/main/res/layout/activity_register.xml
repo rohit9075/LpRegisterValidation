@@ -148,8 +148,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="50dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
 
@@ -158,7 +158,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Male"/>
+                    android:text="@string/text_male"/>
 
 
                 <RadioButton
@@ -166,7 +166,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Female"/>
+                    android:text="@string/text_female"/>
 
             </RadioGroup>
 
@@ -227,7 +227,7 @@
                 android:textColor="@color/colorBlack"
                 android:layout_marginBottom="@dimen/dimen_40dp"
                 android:text="@string/text_already_a_member" />
-        </LinearLayout>
 
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>
