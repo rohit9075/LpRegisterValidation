@@ -1,4 +1,4 @@
-package com.rohit.lpregister;
+package com.rohit.lpregister.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+
+import com.rohit.lpregister.R;
 
 import java.util.Objects;
 
@@ -29,7 +31,7 @@ public class InputValidation {
      *
      * @param context Activity context
      */
-    InputValidation(Context context) {
+  public InputValidation(Context context) {
         this.context = context;
     }
 
@@ -40,7 +42,7 @@ public class InputValidation {
      * @param message  String message passed form the calling class or method
      * @return Method is returning the boolean value
      */
-    boolean isInputEditTextFilled(EditText editText, String message) {
+  public boolean isInputEditTextFilled(EditText editText, String message) {
         String value = editText.getText().toString().trim();
         if (value.isEmpty()) {
             Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
@@ -73,7 +75,7 @@ public class InputValidation {
      * @param editText view
      * @return This method is returning the boolean value
      */
-    boolean isInputEditTextEmail(EditText editText) {
+  public   boolean isInputEditTextEmail(EditText editText) {
         String value = editText.getText().toString().trim();
         if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
 
@@ -97,7 +99,7 @@ public class InputValidation {
      * @param message this message will be provided by the calling method or class
      * @return method is returning boolean value
      */
-    boolean isInputTextInputEditTextFilled(TextInputEditText textInputEditText, String message) {
+  public   boolean isInputTextInputEditTextFilled(TextInputEditText textInputEditText, String message) {
         String value = Objects.requireNonNull(textInputEditText.getText()).toString().trim();
         if (value.isEmpty()) {
             Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
@@ -120,7 +122,7 @@ public class InputValidation {
      * @return boolean
      */
 
-    boolean isTextInputEditTextPasswordMatches(TextInputEditText firstPassword, TextInputEditText secondPassword) {
+  public   boolean isTextInputEditTextPasswordMatches(TextInputEditText firstPassword, TextInputEditText secondPassword) {
         String value1 = Objects.requireNonNull(firstPassword.getText()).toString().trim();
         String value2 = Objects.requireNonNull(secondPassword.getText()).toString().trim();
         if (!value1.contentEquals(value2)) {
@@ -146,7 +148,7 @@ public class InputValidation {
      * @return this method is returning the boolean value.
      */
 
-    public boolean isPasswordLengthTextInputEditText(TextInputEditText passwordLength, String message) {
+  public   boolean isPasswordLengthTextInputEditText(TextInputEditText passwordLength, String message) {
         String password = Objects.requireNonNull(passwordLength.getText()).toString().trim();
 //        String pattern = "^(?=.*[0-9])(?=.*[!@#$%^&*+=?-]).{8,15}$";
         if(password.length()<=6) {
@@ -170,7 +172,7 @@ public class InputValidation {
      * @return boolean
      */
 
-    boolean isRadioButtonSelected(RadioGroup radioGroup, RelativeLayout relativeLayout) {
+   public boolean isRadioButtonSelected(RadioGroup radioGroup, RelativeLayout relativeLayout) {
         if ( radioGroup.getCheckedRadioButtonId() == -1) {
 
             Snackbar.make(relativeLayout, "Please Select Gender", Snackbar.LENGTH_LONG).show();
