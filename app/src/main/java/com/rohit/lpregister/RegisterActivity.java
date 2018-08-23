@@ -39,15 +39,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
          // clickListener(); method call
-        clickListner();
+        clickListener();
 
     }
 
     /**
-     * clickListner() method definition
+     * clickListener() method definition
       */
 
-    private void clickListner() {
+    private void clickListener() {
         mButtonRegister.setOnClickListener(this);
 
         mTextViewAlreadyMember.setOnClickListener(this);
