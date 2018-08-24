@@ -46,8 +46,7 @@ public class InputValidation {
   public boolean isInputEditTextFilled(EditText editText, String message) {
         String value = editText.getText().toString().trim();
         if (value.isEmpty()) {
-            Drawable customErrorDrawable = getErrorIcon();
-            editText.setError(message,customErrorDrawable);
+            editText.setError(message);
             hideKeyboardFrom(editText);
             return true;
         }else {
@@ -78,9 +77,7 @@ public class InputValidation {
   public   boolean isInputEditTextEmail(EditText editText) {
         String value = editText.getText().toString().trim();
         if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
-
-            Drawable customErrorDrawable = getErrorIcon();
-            editText.setError("Email Required",customErrorDrawable);
+            editText.setError("Invalid Email");
             hideKeyboardFrom(editText);
             return true;
         } else {
@@ -101,8 +98,7 @@ public class InputValidation {
   public   boolean isInputTextInputEditTextFilled(TextInputEditText textInputEditText, String message) {
         String value = Objects.requireNonNull(textInputEditText.getText()).toString().trim();
         if (value.isEmpty()) {
-            Drawable customErrorDrawable = getErrorIcon();
-            textInputEditText.setError(message,customErrorDrawable);
+            textInputEditText.setError(message);
             hideKeyboardFrom(textInputEditText);
             return true;
         }else {
@@ -125,8 +121,7 @@ public class InputValidation {
         String value2 = Objects.requireNonNull(secondPassword.getText()).toString().trim();
         if (!value1.contentEquals(value2)) {
 
-            Drawable customErrorDrawable = getErrorIcon();
-            secondPassword.setError("Password Mismatch",customErrorDrawable);
+            secondPassword.setError("Password Mismatch");
             hideKeyboardFrom(secondPassword);
             return true;
         }
@@ -138,12 +133,6 @@ public class InputValidation {
 
     }
 
-    @NonNull
-    private Drawable getErrorIcon() {
-        Drawable customErrorDrawable = context.getResources().getDrawable(R.drawable.ic_error);
-        customErrorDrawable.setBounds(0, 0, customErrorDrawable.getIntrinsicWidth(), customErrorDrawable.getIntrinsicHeight());
-        return customErrorDrawable;
-    }
 
     /**
      * Method to check password length
@@ -157,8 +146,7 @@ public class InputValidation {
 //        String pattern = "^(?=.*[0-9])(?=.*[!@#$%^&*+=?-]).{8,15}$";
         if(password.length()<=6) {
 
-            Drawable customErrorDrawable = getErrorIcon();
-            passwordLength.setError(message,customErrorDrawable);
+            passwordLength.setError(message);
             hideKeyboardFrom(passwordLength);
             return true;
         }

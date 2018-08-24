@@ -40,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private InputValidation mInputValidation;
 
-
     String  mRegisterGender;
 
     private RelativeLayout mRelativeLayout;
@@ -49,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
 
          initView(); // initView() method call
 
@@ -64,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
       */
 
     private void clickListener() {
+
         mButtonRegister.setOnClickListener(this);
 
         mTextViewAlreadyMember.setOnClickListener(this);
@@ -179,7 +178,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        // Checking the Email Field
+        // Checking the Email Empty Field
+        if (mInputValidation.isInputEditTextFilled(mEditTextEmail, "Email Required")) {
+            return;
+        }
+
+        // Checking the valid email or not Field
         if (mInputValidation.isInputEditTextEmail(mEditTextEmail)) {
             return;
         }
@@ -198,7 +202,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (mInputValidation.isRadioButtonSelected(mRadioGroupGender, mRelativeLayout)) {
             return;
         }
-
 
 
         // Checking the Password Field
